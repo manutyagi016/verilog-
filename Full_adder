@@ -1,0 +1,82 @@
+module adder(a,b,cin,sum,cout);
+input a,b,cin;
+output wire sum,cout;
+wire s1,c1,c2,c3;
+xor(s1,a,b);
+xor(sum,s1,cin);
+and(c1,a,b);
+and(c2,b,cin);
+and(c3,a,cin);
+or(cout,c1,c2,c3);
+endmodule
+
+module full_adder(a,b,cin,sum,cout);
+input [3:0]a,b;
+input cin;
+output wire [3:0]sum;
+output cout;
+adder a1(a[0],b[0],cin,sum[0],cout1);
+adder a2(a[1],b[1],cout1,sum[1],cout2);
+adder a3(a[2],b[2],cout2,sum[2],cout3);
+adder a4(a[3],b[3],cout3,sum[3],cout);
+endmodule
+/*
+OTher way 
+module full_adder(a,b,c_in,cout,out);
+input [3:0]a,b;
+input cin;
+output cout;
+output [3:0]sum;
+
+ assign {cout,sum} = a+b+cin;
+endmodule
+
+
+other way
+ module full_adder(a,b,cin,cout,sum);
+input [3:0]a,b;
+input cin;
+output cout;
+output [3:0]sum;
+
+always @ (a or b or cin)
+begin 
+{cout,sum} =a + b + cin;
+end 
+endmodule  */
+
+
+
+
+//test bench //
+module full_adder_tb;
+
+	// Inputs
+	reg [3:0] a;
+	reg [3:0] b;
+	reg cin;
+
+	// Outputs
+	wire [3:0] sum;
+	wire cout;
+
+	// Instantiate the Unit Under Test (UUT)
+	full_adder uut (
+		.a(a), 
+		.b(b), 
+		.cin(cin), 
+		.sum(sum), 
+		.cout(cout)
+	);
+
+	initial begin
+		 
+		 #10 
+		 a=5;
+		 b=8;
+		 cin=0;
+	end
+      
+endmodule
+
+
